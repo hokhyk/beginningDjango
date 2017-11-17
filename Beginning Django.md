@@ -51,12 +51,26 @@ $ rm -rf ~/.pyenv/versions/2.7.9env/
      .[user@~]$ pip install git+https://github.com/django/django.git
      .[user@~]$ git clone https://github.com/django/django.git    &  [user@~]$ pip install /home/Downloads/django/
       
-## start  a Django Project
+## start  a Django Project  (django-admin, django-admin.py)
 To start a Django project you must use the django-admin executable or django-admin.py script that comes with Django. 
-
-      
-      
-      
+### django-admin startproject coffeehouse
+Django project structure
++<BASE_DIR_project_name>
+|
++----manage.py
+|
++---+-<PROJECT_DIR_project_name>
+|
++-__init__.py
++-settings.py
++-urls.py
++-wsgi.py 
+    
+    • manage.py .- Runs project specific tasks. Just as django-admin is used to execute system wide Django tasks, manage.py is used to execute project specific tasks.
+    • __init__.py .- Python file that allows Python packages to be imported from directories where it’s present. Note __init__.py is not Django specific, it’s a generic file used in almost all Python applications.
+    • settings.py .- Contains the configuration settings for the Django project.
+    • urls.py .- Contains URL patterns for the Django project.
+    • wsgi.py .- Contains WSGI configuration properties for the Django project. WSGI is the recommended approach to deploy Django applications on production (i.e., to the public). You don’t need to set up WSGI to develop Django applications.      
       
       
       
