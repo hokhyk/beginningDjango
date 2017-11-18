@@ -72,29 +72,41 @@ Django project structure
     • urls.py .- Contains URL patterns for the Django project.
     • wsgi.py .- Contains WSGI configuration properties for the Django project. WSGI is the recommended approach to deploy Django applications on production (i.e., to the public). You don’t need to set up WSGI to develop Django applications.      
       
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+### Start Django development web server on different address and port
+1. Run the development server on the local address and port 4345 (http://127.0.0.1:4345/)
+python manage.py runserver 4345
+
+2. Run the dev server on the 96.126.104.88 address and port 80 (http://96.126.104.88/)
+python manage.py runserver 96.126.104.88:80
+3. Run the dev server on the 192.168.0.2 address and port 8888 (http://192.168.0.2:8888/)
+python manage.py runserver 192.168.0.2:8888
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
