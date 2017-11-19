@@ -81,6 +81,19 @@ python manage.py runserver 96.126.104.88:80
 3. Run the dev server on the 192.168.0.2 address and port 8888 (http://192.168.0.2:8888/)
 python manage.py runserver 192.168.0.2:8888
 
+## Set Up a Database for a Django Project
+In addition to SQLite, Django also has support for other popular databases that include PostgreSQL, MySQL, and Oracle. The Django configuration to connect to a database is done inside the settting.py file of a Django project in the DATABASES variable.
+
+### Default Django DATABASES dictionary
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATABASES = {
+'default': {
+'ENGINE': 'django.db.backends.sqlite3',
+'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+}
+}
 
 
 
