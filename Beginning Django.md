@@ -85,7 +85,7 @@ python manage.py runserver 192.168.0.2:8888
 In addition to SQLite, Django also has support for other popular databases that include PostgreSQL, MySQL, and Oracle. The Django configuration to connect to a database is done inside the settting.py file of a Django project in the DATABASES variable.
 
 ### Default Django DATABASES dictionary
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+  \# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATABASES = {
@@ -95,15 +95,44 @@ DATABASES = {
 }
 }
 
+The most important parameter of a Django database connection is the ENGINE value. 
 
+### Django ENGINE value for different databases
+Database       Django ENGINE value
+MySQL            django.db.backends.mysql
+Oracle           django.db.backends.oracle
+PostgreSQL       django.db.backends.postgresql_psycopg2
+SQLite           django.db.backends.sqlite3 
 
+### full set of Django database connection parameters  <<geginning Django>> page 17
+ATOMIC_REQUESTS AUTOCOMMIT CONN_MAX_AGE ENGINE HOST NAME OPTIONS PASSWORD PORT USER 
+ 
+### Install python database packages
+Besides configuring Django to connect to a database, you’ll also need to install the necessary Python packages to communicate with your database brand.
+#### Python packages for different databases
+Database     Python package          pip installation syntax
+PostgreSQL   psycopg2                   pip install psycopg2
+MySQL        mysql-python               pip install mysql-python
+Oracle       cx_Oracle                  pip install cx_Oracle
+SQLite       Included with Python 2.5+  N/A
 
+### Test Django Database Connection and Build Django Base Tables
+1. [user@coffeehouse ~]$ python manage.py migrate
 
+## set up content: understand urls, templates and Apps
+Content in Django projects works with three major building blocks: urls, templates, and apps. 
 
+Urls define the entry points or where to access content. Templates define the end points that give form
+to the final content. And apps serve as the middleware between urls and templates, altering or adding
+content from a database or user interactions. 
 
+To run static content you only need to create and configure Django urls and templates. To run dynamic content - built from a database or user interactions - you need to create and configure Django apps, in addition to urls and templates.
 
+Urls: defined in ruls.py with regular expressions
+Templates: Defines as .html files inside directories or DIRS property of TEMPLATES in settings.py.
+Apps: created with manage.py startapp, contains models.py and views.py
 
-
+### create and configure Django Urls
 
 
 
