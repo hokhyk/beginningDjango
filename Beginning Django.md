@@ -133,8 +133,26 @@ Templates: Defines as .html files inside directories or DIRS property of TEMPLAT
 Apps: created with manage.py startapp, contains models.py and views.py
 
 ### create and configure Django Urls
+Listing 1-16. Django url for home page to template
+from django.conf.urls import url
+from django.contrib import admin
+from django.views.generic import TemplateView
+...
+...
+urlpatterns = [
+url(r'^admin/', admin.site.urls),
+url(r'^$',TemplateView.as_view(template_name='homepage.html')),
+]
+As show in Listing 1-16, urlpatterns is a Python list of url() statements. The url method comes from
+the django.conf.urls package. The url method you just added defines the pattern for the home page - the
+regular expression ^$ - followed by the action TemplateView.as_view(template_name='homepage.html').
+This last action is a helper method to direct the requesting party to a template that takes the argument
+template_name='homepage.html'.
 
+1. testing the example
+python manage.py runserver 4345
 
+### Create and Configure Django Templates
 
 
 
