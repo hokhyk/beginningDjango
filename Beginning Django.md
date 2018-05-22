@@ -15,7 +15,7 @@ $ pyenv install -v 2.7.9
 pyenv rehash
 
 ## 创建新的环境,位于 ~/.pyenv/versions/
-$ pyenv virtualenv 2.7.9 2.7.9env
+$ pyenv virtualenv 2.7.9 2.7.9env 
 
 ## 切换到新的环境
 $ pyenv activate 2.7.9env
@@ -37,7 +37,8 @@ $ rm -rf ~/.pyenv/versions/2.7.9env/
     virtualenv --python=python3 mydjangosandbox
    .Activate virtual Python environment
     [user@~]$ source ./bin/activate
-   .To exit a virtual Python environment just type
+   .To exit a virtual
+ Python environment just type
       [user@~]$ deactivate
 
 ## installing django
@@ -52,7 +53,8 @@ $ rm -rf ~/.pyenv/versions/2.7.9env/
      .[user@~]$ git clone https://github.com/django/django.git    &  [user@~]$ pip install /home/Downloads/django/
       
 ## start  a Django Project  (django-admin, django-admin.py)
-To start a Django project you must use the django-admin executable or django-admin.py script that comes with Django. 
+To start a Django project you must use the django-admin executable or django-admin.py script that
+ comes with Django. 
 ### django-admin startproject coffeehouse
 Django project structure
 +<BASE_DIR_project_name>
@@ -66,11 +68,16 @@ Django project structure
 +-urls.py
 +-wsgi.py 
     
-    • manage.py .- Runs project specific tasks. Just as django-admin is used to execute system wide Django tasks, manage.py is used to execute project specific tasks.
-    • __init__.py .- Python file that allows Python packages to be imported from directories where it’s present. Note __init__.py is not Django specific, it’s a generic file used in almost all Python applications.
+    • manage.py .- Runs project specific tasks. Just as django-admin is used to execute
+ system wide Django tasks, manage.py is used to execute project specific tasks.
+    • __init__.py .- Python file that allows Python packages to be imported from
+ directories where it’s present. Note __init__.py is not Django specific, it’s a generic
+ file used in almost all Python applications.
     • settings.py .- Contains the configuration settings for the Django project.
     • urls.py .- Contains URL patterns for the Django project.
-    • wsgi.py .- Contains WSGI configuration properties for the Django project. WSGI is the recommended approach to deploy Django applications on production (i.e., to the public). You don’t need to set up WSGI to develop Django applications.      
+    • wsgi.py .- Contains WSGI configuration properties for the Django project. WSGI is
+ the recommended approach to deploy Django applications on production (i.e., to
+ the public). You don’t need to set up WSGI to develop Django applications.      
       
 ### Start Django development web server on different address and port
 1. Run the development server on the local address and port 4345 (http://127.0.0.1:4345/)
@@ -78,11 +85,32 @@ python manage.py runserver 4345
 
 2. Run the dev server on the 96.126.104.88 address and port 80 (http://96.126.104.88/)
 python manage.py runserver 96.126.104.88:80
+
 3. Run the dev server on the 192.168.0.2 address and port 8888 (http://192.168.0.2:8888/)
 python manage.py runserver 192.168.0.2:8888
 
+## Using pdb to debug Django views
+put this line of code into your view right before the point where you think the problem exists:
+
+import pdb; pdb.set_trace()
+
+Then, the next time you load the page associated with that view, you'll see that your
+browser appears to not load anything. This is because your Django application is
+now paused. If you look in the console where you ran the runserver command, you
+should see a prompt for pdb. In the prompt, you can type the name of any variable
+available in the current Python scope (usually the scope of the view that you are
+debugging) and it will print the current value of that variable.
+  * return HttpResponse({variable to inspect})
+
+  * print {variable to inspect}
+
+  * raise Exception({variable to inspect})
+
+
 ## Set Up a Database for a Django Project
-In addition to SQLite, Django also has support for other popular databases that include PostgreSQL, MySQL, and Oracle. The Django configuration to connect to a database is done inside the settting.py file of a Django project in the DATABASES variable.
+In addition to SQLite, Django also has support for other popular databases that include PostgreSQL,
+ MySQL, and Oracle. The Django configuration to connect to a database is done inside the settting.py file
+ of a Django project in the DATABASES variable.
 
 ### Default Django DATABASES dictionary
   \# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -108,7 +136,8 @@ SQLite           django.db.backends.sqlite3
 ATOMIC_REQUESTS AUTOCOMMIT CONN_MAX_AGE ENGINE HOST NAME OPTIONS PASSWORD PORT USER 
  
 ### Install python database packages
-Besides configuring Django to connect to a database, you’ll also need to install the necessary Python packages to communicate with your database brand.
+Besides configuring Django to connect to a database, you’ll also need to install the necessary Python
+ packages to communicate with your database brand.
 #### Python packages for different databases
 Database     Python package          pip installation syntax
 PostgreSQL   psycopg2                   pip install psycopg2
@@ -126,7 +155,9 @@ Urls define the entry points or where to access content. Templates define the en
 to the final content. And apps serve as the middleware between urls and templates, altering or adding
 content from a database or user interactions. 
 
-To run static content you only need to create and configure Django urls and templates. To run dynamic content - built from a database or user interactions - you need to create and configure Django apps, in addition to urls and templates.
+To run static content you only need to create and configure
+ Django urls and templates. To run dynamic content - built from a database or user interactions - you need to
+ create and configure Django apps, in addition to urls and templates.
 
 Urls: defined in ruls.py with regular expressions
 Templates: Defines as .html files inside directories or DIRS property of TEMPLATES in settings.py.
