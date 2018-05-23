@@ -148,9 +148,11 @@ Besides configuring Django to connect to a database, you’ll also need to insta
 #### Python packages for different databases
 Database     Python package             pip installation syntax
 PostgreSQL   psycopg2                   pip install psycopg2
-MySQL        mysql-python               pip install mysql-python
+MySQL        mysql-python               pip install mysql-python   //python3使用的是pip install PyMySQL  pip install mysqlclient
 Oracle       cx_Oracle                  pip install cx_Oracle
 SQLite       Included with Python 2.5+  N/A
+
+pip install PyMySQL
 
 ### 修改mysql(MariaDB)root的密码：
 ps -ef|grep mysqld  kill -9 mysqlxxx
@@ -165,7 +167,85 @@ MariaDB [mysql]> exit;
 5、正常启动 mariadb：
 #systemctl start mysql
 
+### 创建mysql数据库
 
+　　1、 CREATE DATABASE 数据库名;  CREATE DATABASE `test2` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci; utf8_general_cs, utf8_bin区分大小写
+
+　　2、 GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON 数据库名.* TO 数据库名@localhost IDENTIFIED BY '密码';
+
+　　3、 SET PASSWORD FOR '数据库名'@'localhost' = OLD_PASSWORD('密码');
+
+CREATE USER 'djangouser'@'localhost' IDENTIFIED BY 'djangouser';
+GRANT ALL PRIVILEGES ON *.* TO 'djangouser'@'localhost' IDENTIFIED BY 'djangouser' REQUIRE NONE WITH GRANT OPTION MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
+CREATE DATABASE IF NOT EXISTS `coffeehouse` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+GRANT ALL PRIVILEGES ON `coffeehouse`.* TO 'coffeehouse'@'localhost';
+　　
+　　依次执行3个命令完成数据库创建。注意：中文 “密码”和“数据库”是户自己需要设置的。
+
+　　　　mysql> SHOW DATABASES;
+      　3、建立数据表：
+
+　　mysql> USE 库名;
+
+　　mysql> CREATE TABLE 表名 (字段名 VARCHAR(20), 字段名 CHAR(1));
+
+　　4、删除数据库：
+
+　　mysql> DROP DATABASE 库名;
+
+　　5、删除数据表：
+
+　　mysql> DROP TABLE 表名;
+
+　　6、将表中记录清空：
+
+　　mysql> DELETE FROM 表名;
+
+　　7、往表中插入记录：
+
+　　mysql> INSERT INTO 表名 VALUES ("hyq","M");
+
+　　8、更新表中数据：
+
+　　mysql-> UPDATE 表名 SET 字段名1='a',字段名2='b' WHERE 字段名3='c';
+
+　　9、用文本方式将数据装入数据表中：
+
+　　mysql> LOAD DATA LOCAL INFILE "D:/mysql.txt" INTO TABLE 表名;
+
+　　10、导入.sql文件命令：
+
+　　mysql> USE 数据库名;
+
+　　mysql> SOURCE d:/mysql.sql;
+　　
+　　五、备份数据库：(命令在DOS的\mysql\bin目录下执行)
+
+　　1.导出整个数据库
+
+　　导出文件默认是存在mysql\bin目录下
+
+　　mysqldump -u 用户名 -p 数据库名 > 导出的文件名
+
+　　mysqldump -u user_name -p123456 database_name > outfile_name.sql
+
+　　2.导出一个表
+
+　　mysqldump -u 用户名 -p 数据库名 表名> 导出的文件名
+
+　　mysqldump -u user_name -p database_name table_name > outfile_name.sql
+
+　　3.导出一个数据库结构
+
+　　mysqldump -u user_name -p -d --add-drop-table database_name > outfile_name.sql
+
+　　-d 没有数据 --add-drop-table 在每个create语句之前增加一个drop table
+
+　　4.带语言参数导出
+
+　　mysqldump -uroot -p --default-character-set=latin1 --set-charset=gbk --skip-opt database_name > outfile_name.sql
+　　
+　　
 ### Test Django Database Connection and Build Django Base Tables
 1. [user@coffeehouse ~]$ python manage.py migrate
 
@@ -205,6 +285,42 @@ template_name='homepage.html'.
 python manage.py runserver 4345
 
 ### Create and Configure Django Templates
+
+# python manage.py和 python django-admin.py 
+django-admin.py是django的一个用于管理任务的命令行工具，manage.py是对django-admin.py的简单包装，每个django project 里面都会包换一个manage.py
+
+语法：
+django-admin.py [options]
+manage.py [options]
+
+subcommand是子命令；options是可选的
+
+常用子命令：
+startproject：创建一个项目（*）
+startapp : 创建一个app（*）
+runserver：运行开发服务器（*）
+shell：进入django shell（*）
+dbshell：进入django dbshell
+check：检查django项目完整性
+flush：清空数据库
+compilemessages：编译语言文件（*）
+makemessages：创建语言文件（*）
+makemigrations：生成数据库同步脚本（*）
+migrate：同步数据库（*）
+showmigrations：查看生成的数据库同步脚本（*）
+sqlflush：查看生成清空数据库的脚本（*）
+sqlmigrate：查看数据库同步的sql语句（*）
+dumpdata：导出数据
+loaddata：导入数据
+diffsettings：查看你的配置和django默认配置的不同之处
+...
+
+manage.py特有的一些子命令：
+createsuperuser：创建超级管理员（*）
+changepassword：修改密码（*）
+clearsessions：清楚session
+...
+
 
 
 

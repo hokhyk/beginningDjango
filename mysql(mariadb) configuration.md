@@ -1,3 +1,45 @@
+mysql 在opensuse 上安装
+2013年07月24日 17:09:14
+阅读数：392
+
+1. 1 zypper search   mysql*
+
+1.2 zypper install   mysql-community-server
+
+ 默认目录： 
+
+可执行文件目录：/usr/bin/mysql 
+
+配置文件目录：/etc/mysql 
+
+/数据存放目录：/var/lib/mysql/
+
+配置文件目录：/usr/share/mysql 
+
+/usr/share/man/man1/mysql.1.gz
+
+2，启动服务 serveice mysql start 停止服务 service mysql stop 
+
+3,客户端操作
+
+ >mysql -u root -p 
+
+4.增加用户及权限(否则外部主机无法访问到该数据库服务器)
+
+授权法。例如，你想myuser使用mypassword从任何主机连接到mysql服务器的话。
+ 1.1 grant all on  *.* to  'baseuser'@'%' identified by 'base0001'
+GRANT ALL PRIVILEGES ON *.* TO 'baseuser'@'%' IDENTIFIED BY 'base0001' WITH GRANT OPTION;
+如果你想允许用户myuser从ip为192.168.1.3的主机连接到mysql服务器，并使用mypassword作为密码
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'192.168.1.3' IDENTIFIED BY 'mypassword' WITH GRANT OPTION;
+
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'10.10.40.54' IDENTIFIED BY '123456' WITH GRANT OPTION;
+
+6,参考文档：
+
+http://dev.mysql.com/doc/refman/5.5/en/server-system-variables.html#sysvar_lower_case_table_names
+
+
+
 # 修改mysql(MariaDB)root的密码：
 ps -ef|grep mysqld  kill -9 mysqlxxx
 #mysqld_safe --skip-grant-tables &
