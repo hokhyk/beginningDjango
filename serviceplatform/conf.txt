@@ -1,0 +1,20 @@
+
+server {
+    listen       80;
+    server_name gky.cdtfhr.com;
+    location / {
+        include /etc/nginx/uwsgi_params;
+        uwsgi_pass 127.0.0.1:8000;
+        uwsgi_param UWSGI_SCRIPT ServicePlatform.wsgi;
+        uwsgi_param UWSGI_CHDIR /data/wwwroot/gky.cdtfhr.com/ServicePlatform;
+        index  Home.html Home.htm;
+    }
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   html;
+    }
+    location  ~/static/ {
+        root /data/wwwroot/gky.cdtfhr.com/ServicePlatform/;
+        break;
+}
+}

@@ -1,0 +1,231 @@
+{% extends "master/master.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    编辑设备-指纹和人脸识别设备管理
+{% endblock %}
+
+{% block css %}
+    <link href="/static/plugins/toast-master/css/toastr.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/plugins/nprogress/nprogress.css">
+{% endblock %}
+
+{% block bread_name %}
+    编辑设备信息
+{% endblock %}
+
+{% block bread_node %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">首页</a></li>
+        <li class="breadcrumb-item"><a href="{% url "device_view_list" %}">指纹和人脸识别设备管理</a></li>
+        <li class="breadcrumb-item active">编辑设备</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <!-- Row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card card-outline-info">
+                    <div class="card-body">
+                        {#                                <h4 class="card-title">Form Validation</h4>#}
+                        {#                        <h6 class="card-subtitle">Bootstrap Form Validation check the <a href="http://reactiveraven.github.io/jqBootstrapValidation/">official website </a></h6>#}
+                        <form class="m-t-40 form-horizontal" id="validation-form" method="post" action="">
+                            {% csrf_token %}
+                            <div class="form-body">
+                                <h3 class="card-title font-bold">设备信息</h3>
+                                <hr>
+                                <div class="row p-t-20">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="address">
+                                                设备地址 <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="controls">
+                                                <input type="text" name="address" class="form-control" id="address" value="{{ device.address }}">
+                                            </div>
+                                            <div class="form-control-feedback">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="device_number">
+                                                设备编号 <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="controls">
+                                                <input type="text" name="device_number" class="form-control" id="device_number" value="{{ device.number }}"> </div>
+                                            <div class="form-control-feedback">
+                                                <small> <code>设备编号</code> 必须是唯一的。</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="active">
+                                                是否有效
+                                            </label>
+                                            <div class="controls">
+                                                <select name="active" id="active" class="form-control" >
+                                                    {% if person.active == True %}
+                                                        <option value="True" selected>有效</option>
+                                                        <option value="False">无效</option>
+                                                    {% else %}
+                                                        <option value="True" >有效</option>
+                                                        <option value="False" selected>无效</option>
+                                                    {% endif %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--/span-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i>保存</button>
+                                <button type="reset" class="btn btn-inverse"><i class="fa fa-undo"></i> 重置</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Row -->
+    </div>
+{% endblock %}
+
+
+{% block js1 %}
+    {#    <script src="/static/js/validation.js"></script>#}
+    <script src="/static/plugins/toast-master/js/toastr.js"></script>
+    <script src="/static/plugins/nprogress/nprogress.js"></script>
+    <script src="/static/js/jquery.validate.js"></script>
+{% endblock %}
+
+{% block js2 %}
+    <script>
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+
+        jQuery(function($) {
+            var $validation = false;
+            $('#validation-form').validate({
+                errorElement: 'div',
+                errorClass: 'help-block',
+                {#                                onfocusout:true,#}
+                focusInvalid: true,
+                onkeyup:false,
+                ignore: "",
+                rules: {
+                    address: {
+                        required: true
+                    },
+                    device_number: {
+                        required: true,
+                        remote:{
+                            url: "/check_edit_device_number/",
+                            type: "post",
+                            dataType: "json",
+                            data: {
+                                'csrfmiddlewaretoken':csrftoken,
+                                device_number: function() {
+                                    return $("#device_number").val();
+                                },
+                                device_id: {{ device.id }}
+                            }
+                        }
+                    }
+                },
+
+                messages: {
+                    address:{
+                        required: "请填写设备地址。"
+                    },
+                    device_number:{
+                        required: "请填写设备编号。",
+                        remote:"该设备编号已存在。"
+                    }
+                },
+
+                highlight: function (e) {
+                    $(e).closest('.form-group').addClass('has-error');
+                },
+
+                success: function (e) {
+                    $(e).closest('.form-group').removeClass('has-error');//.addClass('has-info');
+                    $(e).remove();
+                },
+
+                errorPlacement: function (error, element) {
+                    if(element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+                        var controls = element.closest('div[class*="col-"]');
+                        if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                        else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+                    }
+                    else if(element.is('.select2')) {
+                        error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                    }
+                    else if(element.is('.chosen-select')) {
+                        error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+                    }
+                    else error.insertAfter(element.parent());
+                },
+
+                submitHandler: function (form) {
+                    NProgress.start();
+                    $.ajax({
+                        type: 'post',
+                        url: "/edit_device/",
+                        data:{
+                            'csrfmiddlewaretoken':csrftoken,
+                            device_id:{{ device_id }},
+                            address:$('#address').val(),
+                            device_number:$('#device_number').val(),
+                            active: $('#active').val()
+                        },
+                        success:function(data){
+                            data=JSON.parse(data);
+                            toastr.options.progressBar = true;
+                            toastr.options.timeOut = 10000;
+                            toastr.options.extendedTimeOut = 10000;
+                            if(data.status == '200'){
+                                toastr.success('成功添加设备信息！');
+                                location.href='/device_detail/' + data.device_id;
+                            }
+                            else{
+                                toastr.error(data.msg);
+                            }
+                            NProgress.done();
+                        }
+                    });
+                    return false;
+                },
+                invalidHandler: function (form) {
+                }
+            });
+        });
+    </script>
+{% endblock %}

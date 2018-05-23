@@ -1,0 +1,119 @@
+{% extends "master/master.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    设备详情-指纹和人脸识别设备管理
+{% endblock %}
+
+{% block css %}
+    <link href="/static/plugins/toast-master/css/toastr.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/plugins/nprogress/nprogress.css">
+{% endblock %}
+
+{% block bread_name %}
+    {{ device.address }}
+{% endblock %}
+
+{% block bread_node %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">首页</a></li>
+        <li class="breadcrumb-item"><a href="{% url "device_view_list" %}">指纹和人脸识别设备管理</a></li>
+        <li class="breadcrumb-item active">设备详情</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+
+        <!-- Row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card card-outline-info">
+{#                    <div class="card-header">#}
+{#                        <h4 class="m-b-0 text-white">单位详情</h4>#}
+{#                    </div>#}
+                    <div class="card-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-body">
+                                <h3 class="box-title font-bold">设备基本信息</h3>
+                                <hr class="m-t-0 m-b-40">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="control-label text-right col-md-3">设备地址：</label>
+                                            <div class="col-md-9">
+                                                <p class="form-control-static"> {{ device.address }} </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="control-label text-right col-md-3">设备编号：</label>
+                                            <div class="col-md-9">
+                                                <p class="form-control-static"> {{ device.number }} </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                </div>
+                                <!--/row-->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="control-label text-right col-md-3">设备密钥：</label>
+                                            <div class="col-md-9">
+                                                <p class="form-control-static"> {{ device.key }} </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="control-label text-right col-md-3">是否有效：</label>
+                                            <div class="col-md-9">
+                                                <p class="form-control-static">
+                                                    {% if device.active %}
+                                                    有效
+                                                    {% else %}
+                                                    无效
+                                                    {% endif %}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                </div>
+
+                            </div>
+                            <div class="form-actions">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-offset-3 col-md-9">
+                                                <a href="/edit_device?device_id={{ device.id }}" class="btn btn-info"> <i class="fa fa-pencil"></i> 编辑</a>
+                                                <a href="{% url 'create_new_device' %}" class="btn btn-success"> <i class="fa fa-plus"></i> 创建</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6"> </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Row -->
+
+    </div>
+{% endblock %}
+
+{% block js1 %}
+{% endblock %}
+
+{% block js2 %}
+{% endblock %}

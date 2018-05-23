@@ -1,0 +1,387 @@
+{% extends "master/master.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    添加单位-单位管理
+{% endblock %}
+
+{% block css %}
+    <link href="/static/plugins/toast-master/css/toastr.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/plugins/nprogress/nprogress.css">
+{% endblock %}
+
+{% block bread_name %}
+    添加单位
+{% endblock %}
+
+{% block bread_node %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">首页</a></li>
+        <li class="breadcrumb-item"><a href="/company_view_list">单位管理</a></li>
+        <li class="breadcrumb-item active">添加单位</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <!-- Row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card card-outline-info">
+                    <div class="card-body">
+                        {#                                <h4 class="card-title">Form Validation</h4>#}
+                        {#                        <h6 class="card-subtitle">Bootstrap Form Validation check the <a href="http://reactiveraven.github.io/jqBootstrapValidation/">official website </a></h6>#}
+                        <form class="m-t-40 form-horizontal" id="validation-form" method="post" action="">
+                            {% csrf_token %}
+                            <div class="form-body">
+                                <h3 class="card-title font-bold">基本信息</h3>
+                                <hr>
+                                <div class="row p-t-20">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="company_name">
+                                                单位名称 <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="controls">
+                                                <input type="text" name="company_name" class="form-control" id="company_name">
+                                            </div>
+                                            <div class="form-control-feedback">
+                                                <small>
+                                                    <code>单位名称</code> 必须是唯一的。
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="company_number">
+                                                单位编号 <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="controls">
+                                                <input type="text" name="company_number" class="form-control" id="company_number" > </div>
+                                            <div class="form-control-feedback">
+                                                <small> <code>单位编号</code> 必须是唯一的。</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="company_tel">
+                                                单位电话
+                                            </label>
+                                            <div class="controls">
+                                                <input type="text" name="company_tel" id="company_tel" class="form-control"> </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="policy_types">
+                                                政策类型
+                                            </label>
+                                            <div class="controls">
+                                                <select name="policy_types" id="policy_types" class="form-control">
+                                                    <option value="">-- 请选择政策类型 --</option>
+                                                    {% for i in policy %}
+                                                        <option value="{{ i.id }}">{{ i.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="remark">
+                                        备注
+                                    </label>
+                                    <div class="controls">
+                                        <textarea name="remark" id="remark" class="form-control"></textarea>
+                                    </div>
+                                </div>
+
+
+                                <h3 class="card-title m-t-40 font-bold">联系人信息</h3>
+                                <hr>
+                                <div class="row p-t-20">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="contract_name">
+                                                联系人姓名
+                                            </label>
+                                            <div class="controls">
+                                                <input type="text" name="contract_name" id="contract_name" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 ">
+                                        <div class="form-group">
+                                            <label for="contract_tel">
+                                                联系人电话
+                                            </label>
+                                            <div class="controls">
+                                                <input type="text" name="contract_tel" id="contract_tel" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h3 class="card-title m-t-40 font-bold">银行信息</h3>
+                                <hr>
+                                <div class="row p-t-20">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="general_bank">
+                                                银行总行 <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="controls">
+                                                <select name="general_bank" id="general_bank"  class="form-control">
+                                                    <option value="">-- 请选择银行总行 --</option>
+                                                    {% for i in bank %}
+                                                        <option value="{{ i.id }}">{{ i.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="bank_branch">
+                                                银行支行 <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="controls">
+                                                <input type="text" name="bank_branch" id ="bank_branch" class="form-control" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="account_name">
+                                                开户名称 <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="controls">
+                                                <input type="text" name="account_name" class="form-control" id="account_name" > </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="bank_account">
+                                                银行账号 <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="controls">
+                                                <input type="text" name="bank_account" class="form-control" id="bank_account" > </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h3 class="card-title m-t-40 font-bold">注销信息</h3>
+                                <hr>
+                                <div class="row p-t-20">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="logout">
+                                                注销标志 <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="controls">
+                                                <select name="logout" id="logout" class="form-control" >
+                                                    <option value="False">未注销</option>
+                                                    <option value="True">已注销</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i>保存</button>
+                                <button type="reset" class="btn btn-inverse"><i class="fa fa-undo"></i> 重置</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Row -->
+    </div>
+{% endblock %}
+
+
+{% block js1 %}
+    {#    <script src="/static/js/validation.js"></script>#}
+    <script src="/static/plugins/toast-master/js/toastr.js"></script>
+    <script src="/static/plugins/nprogress/nprogress.js"></script>
+    <script src="/static/js/jquery.validate.js"></script>
+{% endblock %}
+
+{% block js2 %}
+    <script>
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+
+        jQuery(function($) {
+            var $validation = false;
+            $('#validation-form').validate({
+                errorElement: 'div',
+                errorClass: 'help-block',
+                {#                                onfocusout:true,#}
+                focusInvalid: true,
+                onkeyup:false,
+                ignore: "",
+                rules: {
+                    company_name: {
+                        required: true,
+                        remote:{
+                            url: "/check_create_company_name/",
+                            type: "post",
+                            dataType: "json",
+                            data: {
+                                'csrfmiddlewaretoken':csrftoken,
+                                company_name: function() {
+                                    return $("#company_name").val();
+                                }
+                            }
+                        }
+                    },
+                    company_number: {
+                        required: true,
+                        remote:{
+                            url: "/check_create_company_number/",
+                            type: "post",
+                            dataType: "json",
+                            data: {
+                                'csrfmiddlewaretoken':csrftoken,
+                                company_number: function() {
+                                    return $("#company_number").val();
+                                }
+                            }
+                        }
+                    },
+                    general_bank: {
+                        required:true
+                    },
+                    bank_branch: {
+                        required:true
+                    },
+                    bank_account: {
+                        required:true
+                    },
+                    account_name: {
+                        required:true
+                    }
+                },
+
+                messages: {
+                    company_name:{
+                        required: "请填写单位名称。",
+                        remote:"该单位名称已存在。"
+                    },
+                    general_bank:{
+                        required: "请选择银行总行。"
+                    },
+                    company_number:{
+                        required: "请填写单位编号。",
+                        remote:"该单位编号已存在。"
+                    },
+                    bank_branch:{
+                        required: "请填写银行支行。"
+                    },
+                    bank_account:{
+                        required: "请填写银行账号。"
+                    },
+                    account_name:{
+                        required: "请填写账户名称。"
+                    }
+
+                },
+
+                highlight: function (e) {
+                    $(e).closest('.form-group').addClass('has-error');
+                },
+
+                success: function (e) {
+                    $(e).closest('.form-group').removeClass('has-error');//.addClass('has-info');
+                    $(e).remove();
+                },
+
+                errorPlacement: function (error, element) {
+                    if(element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+                        var controls = element.closest('div[class*="col-"]');
+                        if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                        else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+                    }
+                    else if(element.is('.select2')) {
+                        error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                    }
+                    else if(element.is('.chosen-select')) {
+                        error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+                    }
+                    else error.insertAfter(element.parent());
+                },
+
+                submitHandler: function (form) {
+                    NProgress.start();
+                    $.ajax({
+                        type: 'post',
+                        url: "/create_new_company/",
+                        data:{
+                            'csrfmiddlewaretoken':csrftoken,
+                            name:$('#company_name').val(),
+                            company_num:$('#company_number').val(),
+                            company_phone:$('#company_tel').val(),
+                            contract_people:$('#contract_name').val(),
+                            contract_phone:$('#contract_tel').val(),
+                            policy_types:$('#policy_types').val(),
+                            general_bank:$('#general_bank').val(),
+                            bank_branch:$('#bank_branch').val(),
+                            account_name:$('#account_name').val(),
+                            bank_account:$('#bank_account').val(),
+                            logout:$('#logout').val(),
+                            remark:$('#remark').val()
+                        },
+                        success:function(data){
+                            data=JSON.parse(data);
+                            toastr.options.progressBar = true;
+                            toastr.options.timeOut = 10000;
+                            toastr.options.extendedTimeOut = 10000;
+                            if(data.status == '200'){
+                                toastr.success('成功添加单位信息！');
+                                location.href='/company_detail/' + data.company_id;
+                            }
+                            else{
+                                toastr.error(data.msg);
+                            }
+                            NProgress.done();
+                        }
+                    });
+                    return false;
+                },
+                invalidHandler: function (form) {
+                }
+            });
+        });
+    </script>
+{% endblock %}
