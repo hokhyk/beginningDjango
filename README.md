@@ -1,2 +1,0 @@
-# beginningDjango
-beginningDjango
