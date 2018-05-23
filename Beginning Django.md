@@ -90,15 +90,22 @@ python manage.py runserver 96.126.104.88:80
 python manage.py runserver 192.168.0.2:8888
 
 ## Using pdb to debug Django views
-put this line of code into your view right before the point where you think the problem exists:
+put this line of code
+ into your view right before the point where you think the problem exists:
+
 
 import pdb; pdb.set_trace()
 
-Then, the next time you load the page associated with that view, you'll see that your
-browser appears to not load anything. This is because your Django application is
-now paused. If you look in the console where you ran the runserver command, you
-should see a prompt for pdb. In the prompt, you can type the name of any variable
-available in the current Python scope (usually the scope of the view that you are
+Then, the next time you load the page associated with that view, you'll see that your
+
+browser appears to not load anything. This is because your Django application is
+
+now paused. If you look in the console where you ran the runserver command, you
+
+should see a prompt for pdb. In the prompt, you can type the name of any variable
+
+available in the current Python scope (usually the scope of the view that you are
+
 debugging) and it will print the current value of that variable.
   * return HttpResponse({variable to inspect})
 
@@ -139,11 +146,25 @@ ATOMIC_REQUESTS AUTOCOMMIT CONN_MAX_AGE ENGINE HOST NAME OPTIONS PASSWORD PORT U
 Besides configuring Django to connect to a database, you’ll also need to install the necessary Python
  packages to communicate with your database brand.
 #### Python packages for different databases
-Database     Python package          pip installation syntax
+Database     Python package             pip installation syntax
 PostgreSQL   psycopg2                   pip install psycopg2
 MySQL        mysql-python               pip install mysql-python
 Oracle       cx_Oracle                  pip install cx_Oracle
 SQLite       Included with Python 2.5+  N/A
+
+### 修改mysql(MariaDB)root的密码：
+ps -ef|grep mysqld  kill -9 mysqlxxx
+#mysqld_safe --skip-grant-tables &
+#mysql -u root
+MariaDB [(none)]> use mysql;  
+MariaDB [mysql]> UPDATE user SET password=password('newpassword') WHERE user='root';  
+MariaDB [mysql]> flush privileges;   
+MariaDB [mysql]> exit; 
+4、关闭跳过授权启动的进程：
+#kill -9 1441 
+5、正常启动 mariadb：
+#systemctl start mysql
+
 
 ### Test Django Database Connection and Build Django Base Tables
 1. [user@coffeehouse ~]$ python manage.py migrate
