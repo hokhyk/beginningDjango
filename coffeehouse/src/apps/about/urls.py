@@ -1,4 +1,4 @@
-"""coffeehouse URL Configuration
+"""about URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.11/topics/http/urls/
@@ -14,22 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 
-from django.conf.urls import url, include
-from django.contrib import admin
-from django.views.generic import TemplateView
+from django.conf.urls import url
+# from django.contrib import admin
+# from django.views.generic import TemplateView
 
 
-# from coffeehouse.src.coffeehouse.apps.about import views as about_views
 # import sys
 # sys.path.append("..")
-# from coffeehouse.apps.about import views as about_views
+from . import views as about_views
 
 urlpatterns = [
-    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    url(r'^admin/', admin.site.urls),
-    url(r'^$', TemplateView.as_view(template_name='homepage.html')),
-    # url(r'^about/', about_views.contact),
-    url(r'^about/', include('apps.about.urls')),
+    url(r'^about/', about_views.contact),
 ]
-
-# admin/vagrant1 for django admin backend
