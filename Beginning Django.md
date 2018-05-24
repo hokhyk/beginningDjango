@@ -3,9 +3,12 @@ ubuntu16.04
 vagrant vagrant
 
 安装python2.7.9环境：
-$sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm
+$sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev 
+libreadline-dev libsqlite3-dev wget curl llvm
 
-$ curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
+$ curl -L 
+https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-
+installer | bash
 
 pyenv install --list
 pyenv versions
@@ -50,10 +53,12 @@ $ rm -rf ~/.pyenv/versions/2.7.9env/
 
     3. install Django from git:
      .[user@~]$ pip install git+https://github.com/django/django.git
-     .[user@~]$ git clone https://github.com/django/django.git    &  [user@~]$ pip install /home/Downloads/django/
+     .[user@~]$ git clone https://github.com/django/django.git    &  [user@~]$ 
+pip install /home/Downloads/django/
       
 ## start  a Django Project  (django-admin, django-admin.py)
-To start a Django project you must use the django-admin executable or django-admin.py script that
+To start a Django project you must use the django-admin executable or 
+django-admin.py script that
  comes with Django. 
 ### django-admin startproject coffeehouse
 Django project structure
@@ -68,25 +73,32 @@ Django project structure
 +-urls.py
 +-wsgi.py 
     
-    • manage.py .- Runs project specific tasks. Just as django-admin is used to execute
+    • manage.py .- Runs project specific tasks. Just as django-admin is used to 
+execute
  system wide Django tasks, manage.py is used to execute project specific tasks.
     • __init__.py .- Python file that allows Python packages to be imported from
- directories where it’s present. Note __init__.py is not Django specific, it’s a generic
+ directories where it’s present. Note __init__.py is not Django specific, it’s a 
+generic
  file used in almost all Python applications.
     • settings.py .- Contains the configuration settings for the Django project.
     • urls.py .- Contains URL patterns for the Django project.
-    • wsgi.py .- Contains WSGI configuration properties for the Django project. WSGI is
+    • wsgi.py .- Contains WSGI configuration properties for the Django project. 
+WSGI is
  the recommended approach to deploy Django applications on production (i.e., to
- the public). You don’t need to set up WSGI to develop Django applications.      
+ the public). You don’t need to set up WSGI to develop Django applications.     
+ 
       
 ### Start Django development web server on different address and port
-1. Run the development server on the local address and port 4345 (http://127.0.0.1:4345/)
+1. Run the development server on the local address and port 4345 
+(http://127.0.0.1:4345/)
 python manage.py runserver 4345
 
-2. Run the dev server on the 96.126.104.88 address and port 80 (http://96.126.104.88/)
+2. Run the dev server on the 96.126.104.88 address and port 80 
+(http://96.126.104.88/)
 python manage.py runserver 96.126.104.88:80
 
-3. Run the dev server on the 192.168.0.2 address and port 8888 (http://192.168.0.2:8888/)
+3. Run the dev server on the 192.168.0.2 address and port 8888 
+(http://192.168.0.2:8888/)
 python manage.py runserver 192.168.0.2:8888
 
 ## Using pdb to debug Django views
@@ -96,15 +108,18 @@ put this line of code
 
 import pdb; pdb.set_trace()
 
-Then, the next time you load the page associated with that view, you'll see that your
+Then, the next time you load the page associated with that view, you'll see that 
+your
 
 browser appears to not load anything. This is because your Django application is
 
 now paused. If you look in the console where you ran the runserver command, you
 
-should see a prompt for pdb. In the prompt, you can type the name of any variable
+should see a prompt for pdb. In the prompt, you can type the name of any 
+variable
 
-available in the current Python scope (usually the scope of the view that you are
+available in the current Python scope (usually the scope of the view that you 
+are
 
 debugging) and it will print the current value of that variable.
   * return HttpResponse({variable to inspect})
@@ -115,8 +130,10 @@ debugging) and it will print the current value of that variable.
 
 
 ## Set Up a Database for a Django Project
-In addition to SQLite, Django also has support for other popular databases that include PostgreSQL,
- MySQL, and Oracle. The Django configuration to connect to a database is done inside the settting.py file
+In addition to SQLite, Django also has support for other popular databases that 
+include PostgreSQL,
+ MySQL, and Oracle. The Django configuration to connect to a database is done 
+inside the settting.py file
  of a Django project in the DATABASES variable.
 
 ### Default Django DATABASES dictionary
@@ -130,7 +147,8 @@ DATABASES = {
 }
 }
 
-The most important parameter of a Django database connection is the ENGINE value. 
+The most important parameter of a Django database connection is the ENGINE 
+value. 
 
 ### Django ENGINE value for different databases
 Database       Django ENGINE value
@@ -139,16 +157,20 @@ Oracle           django.db.backends.oracle
 PostgreSQL       django.db.backends.postgresql_psycopg2
 SQLite           django.db.backends.sqlite3 
 
-### full set of Django database connection parameters  <<geginning Django>> page 17
-ATOMIC_REQUESTS AUTOCOMMIT CONN_MAX_AGE ENGINE HOST NAME OPTIONS PASSWORD PORT USER 
+### full set of Django database connection parameters  <<geginning Django>> page 
+17
+ATOMIC_REQUESTS AUTOCOMMIT CONN_MAX_AGE ENGINE HOST NAME OPTIONS PASSWORD PORT 
+USER 
  
 ### Install python database packages
-Besides configuring Django to connect to a database, you’ll also need to install the necessary Python
+Besides configuring Django to connect to a database, you’ll also need to install 
+the necessary Python
  packages to communicate with your database brand.
 #### Python packages for different databases
 Database     Python package             pip installation syntax
 PostgreSQL   psycopg2                   pip install psycopg2
-MySQL        mysql-python               pip install mysql-python   //python3使用的是pip install PyMySQL  pip install mysqlclient
+MySQL        mysql-python               pip install mysql-python   
+//python3使用的是pip install PyMySQL  pip install mysqlclient
 Oracle       cx_Oracle                  pip install cx_Oracle
 SQLite       Included with Python 2.5+  N/A
 
@@ -159,7 +181,8 @@ ps -ef|grep mysqld  kill -9 mysqlxxx
 #mysqld_safe --skip-grant-tables &
 #mysql -u root
 MariaDB [(none)]> use mysql;  
-MariaDB [mysql]> UPDATE user SET password=password('newpassword') WHERE user='root';  
+MariaDB [mysql]> UPDATE user SET password=password('newpassword') WHERE 
+user='root';  
 MariaDB [mysql]> flush privileges;   
 MariaDB [mysql]> exit; 
 4、关闭跳过授权启动的进程：
@@ -169,15 +192,20 @@ MariaDB [mysql]> exit;
 
 ### 创建mysql数据库
 
-　　1、 CREATE DATABASE 数据库名;  CREATE DATABASE `test2` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci; utf8_general_cs, utf8_bin区分大小写
+　　1、 CREATE DATABASE 数据库名;  CREATE DATABASE `test2` DEFAULT CHARACTER SET utf8 
+COLLATE utf8_general_ci; utf8_general_cs, utf8_bin区分大小写
 
-　　2、 GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON 数据库名.* TO 数据库名@localhost IDENTIFIED BY '密码';
+　　2、 GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON 数据库名.* TO 
+数据库名@localhost IDENTIFIED BY '密码';
 
 　　3、 SET PASSWORD FOR '数据库名'@'localhost' = OLD_PASSWORD('密码');
 
 CREATE USER 'djangouser'@'localhost' IDENTIFIED BY 'djangouser';
-GRANT ALL PRIVILEGES ON *.* TO 'djangouser'@'localhost' IDENTIFIED BY 'djangouser' REQUIRE NONE WITH GRANT OPTION MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
-CREATE DATABASE IF NOT EXISTS `coffeehouse` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+GRANT ALL PRIVILEGES ON *.* TO 'djangouser'@'localhost' IDENTIFIED BY 
+'djangouser' REQUIRE NONE WITH GRANT OPTION MAX_QUERIES_PER_HOUR 0 
+MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
+CREATE DATABASE IF NOT EXISTS `coffeehouse` DEFAULT CHARACTER SET utf8 COLLATE 
+utf8_bin;
 GRANT ALL PRIVILEGES ON `coffeehouse`.* TO 'coffeehouse'@'localhost';
 　　
 　　依次执行3个命令完成数据库创建。注意：中文 “密码”和“数据库”是户自己需要设置的。
@@ -243,25 +271,31 @@ GRANT ALL PRIVILEGES ON `coffeehouse`.* TO 'coffeehouse'@'localhost';
 
 　　4.带语言参数导出
 
-　　mysqldump -uroot -p --default-character-set=latin1 --set-charset=gbk --skip-opt database_name > outfile_name.sql
+　　mysqldump -uroot -p --default-character-set=latin1 --set-charset=gbk 
+--skip-opt database_name > outfile_name.sql
 　　
 　　
 ### Test Django Database Connection and Build Django Base Tables
 1. [user@coffeehouse ~]$ python manage.py migrate
 
 ## set up content: understand urls, templates and Apps
-Content in Django projects works with three major building blocks: urls, templates, and apps. 
+Content in Django projects works with three major building blocks: urls, 
+templates, and apps. 
 
-Urls define the entry points or where to access content. Templates define the end points that give form
-to the final content. And apps serve as the middleware between urls and templates, altering or adding
+Urls define the entry points or where to access content. Templates define the 
+end points that give form
+to the final content. And apps serve as the middleware between urls and 
+templates, altering or adding
 content from a database or user interactions. 
 
 To run static content you only need to create and configure
- Django urls and templates. To run dynamic content - built from a database or user interactions - you need to
+ Django urls and templates. To run dynamic content - built from a database or 
+user interactions - you need to
  create and configure Django apps, in addition to urls and templates.
 
 Urls: defined in ruls.py with regular expressions
-Templates: Defines as .html files inside directories or DIRS property of TEMPLATES in settings.py.
+Templates: Defines as .html files inside directories or DIRS property of 
+TEMPLATES in settings.py.
 Apps: created with manage.py startapp, contains models.py and views.py
 
 ### create and configure Django Urls
@@ -275,10 +309,14 @@ urlpatterns = [
 url(r'^admin/', admin.site.urls),
 url(r'^$',TemplateView.as_view(template_name='homepage.html')),
 ]
-As show in Listing 1-16, urlpatterns is a Python list of url() statements. The url method comes from
-the django.conf.urls package. The url method you just added defines the pattern for the home page - the
-regular expression ^$ - followed by the action TemplateView.as_view(template_name='homepage.html').
-This last action is a helper method to direct the requesting party to a template that takes the argument
+As show in Listing 1-16, urlpatterns is a Python list of url() statements. The 
+url method comes from
+the django.conf.urls package. The url method you just added defines the pattern 
+for the home page - the
+regular expression ^$ - followed by the action 
+TemplateView.as_view(template_name='homepage.html').
+This last action is a helper method to direct the requesting party to a template 
+that takes the argument
 template_name='homepage.html'.
 
 1. testing the example
@@ -287,7 +325,8 @@ python manage.py runserver 4345
 ### Create and Configure Django Templates
 
 # python manage.py和 python django-admin.py 
-django-admin.py是django的一个用于管理任务的命令行工具，manage.py是对django-admin.py的简单包装，每个django project 里面都会包换一个manage.py
+django-admin.py是django的一个用于管理任务的命令行工具，manage.py是对django-admin.py的简单包装，每个django 
+project 里面都会包换一个manage.py
 
 语法：
 django-admin.py [options]
@@ -321,20 +360,278 @@ changepassword：修改密码（*）
 clearsessions：清楚session
 ...
 
+# python manage.py createsuperuser
+  
+# pip install docutils
+
+# django url regular expression notations  (pg. 32 <<begining django>>
+# Project main urls.py
+from coffeehouse.stores import views as stores_views
+urlpatterns = patterns[
+url(r'^stores/(?P<store_id>\d+)/',stores_views.detail),
+]
 
 
 
+from django.shortcuts import render
+def detail(request,store_id='1'):
+# Access store_id with 'store_id' variable
+return render(request,'stores/detail.html')
 
+url(r'^stores/',stores_views.detail,{'location':'headquarters'})
 
+def detail(request,store_id='1',location=None):
 
+def detail(request,store_id='1',location=None):
+# Access store_id param with 'store_id' variable and location param with 
+'location'
+variable
+# Extract 'hours' or 'map' value appended to url as
+# ?hours=sunday&map=flash
+hours = request.GET.get('hours', '')
+map = request.GET.get('map', '')
+# 'hours' has value 'sunday' or '' if hours not in url
+# 'map' has value 'flash' or '' if map not in url
+return render(request,'stores/detail.html')
 
+Django url parameters are always treated as strings, irrespective of the regular 
+expression. For
+example, \d+ catches digits, but a value of one is treated as ‘1’ (string), not 
+1 (integer). this is particularly
+important if you plan to work with url parameters in view methods and do 
+operations that require something
+other than strings.
+store_patterns = [
+url(r'^$',stores_views.index),
+url(r'^(?P<store_id>\d+)/$',stores_views.detail),
+]
+about_patterns = [
+url(r'^$',about_views.index),
+url(r'^contact/$',about_views.contact),
+]
+urlpatterns = [
+url(r'^$',TemplateView.as_view(template_name='homepage.html')),
+url(r'^about/',include(about_patterns)),
+url(r'^stores/',include(store_patterns),{'location':'headquarters'}),
+]
 
+# url namespace
+To qualify a url name with a namespace you use the syntax <namespace>:<name>. As 
+you can see toward
+the bottom of Listing 2-16, to reference the index in the about urls.py you use 
+about:index and to reference
+the index in the stores urls.py file you use stores:index.
+The namespace attribute can also be nested to use the syntax 
+<namespace1>:<namespace2>:<namespac
+e3>:<name> to reference urls. 
 
+Listing 2-17. Django urls.py with nested namespace attribute
+# Main urls.py
+from django.conf.urls import include, url
+from django.views.generic import TemplateView
+urlpatterns = [
+url(r'^$',TemplateView.as_view(template_name='homepage.html'),name="homepage"),
+url(r'^stores/',include('coffeehouse.stores.urls',namespace="stores")),
+]
+# Stores urls.py
+from . import views
+urlpatterns = [
+url(r'^$',views.index,name="index"),
+url(r'^(?P<store_id>\d+)/$',views.detail,name="detail"),
+url(r'^(?P<store_id>\d+)/about/',include('coffeehouse.about.urls',namespace=
+"about")),
+]
+# About urls.py
+from . import views
 
+urlpatterns = [
+url(r'^$',views.index,name="index"),
+url(r'^contact/$',views.contact,name="contact"),
+]
+# Definition in view method
+from django.http import HttpResponsePermanentRedirect
+from django.core.urlresolvers import reverse
+def method(request):
+....
+return HttpResponsePermanentRedirect(reverse('stores:about:index', 
+args=(store.id,)))
+# Definition in template
+<a href="{% url 'stores:about:index' store.id %}">See about for 
+{{store.name}}</a>
 
+# django httprequest and QueryDict reference
+https://docs.djangoproject.com/en/1.11/_modules/django/http/request/
+#HttpRequest
+https://docs.djangoproject.com/en/1.11/_modules/django/http/request/#QueryDict
 
+# django view to pass data to templates
+from django.shortcuts import render
+def detail(request,store_id='1',location=None):
+#Create fixed data structures to pass to template
+#data could equally come from database queries
+#web services or social APIs
+STORE_NAME = 'Downtown'
+store_address = {'street':'Main #385','city':'San Diego','state':'CA'}
+store_amenities = ['WiFi','A/C']
+store_menu = ((0,''),(1,'Drinks'),(2,'Food'))
+values_for_template = {'store_name':STORE_NAME, 'store_address':store_address, 
+'store_
+amenities':store_amenities, 'store_menu':store_menu}
+return render(request,'stores/detail.html', values_for_template)
 
+<h4>{{store_name}} store</h4>
+<p>{{store_address.street}}</p>
+<p>{{store_address.city}},{{store_address.state}}</p>
+<hr/>
+<p>We offer: {{store_amenities.0}} and {{store_amenities.1}}</p>
+<p>Menu includes : {{store_menu.1.1}} and {{store_menu.2.1}}</p>
 
+# Django view method response alternatives
+#Option 1)
+from django.shortcuts import render
+def detail(request,store_id='1',location=None):
+...
+return render(request,'stores/detail.html', values_for_template)
 
+#Option 2)
+from django.template.response import TemplateResponse
+def detail(request,store_id='1',location=None):
+...
+return TemplateResponse(request, 'stores/detail.html', values_for_template)
+
+#Option 3)
+from django.http import HttpResponse
+from django.template import loader, Context
+def detail(request,store_id='1',location=None):
+...
+response = HttpResponse()
+t = loader.get_template('stores/detail.html')
+c = Context(values_for_template)
+return response.write(t.render(c))
+
+# HTTP Content-type and HTTP Status for Django view method responses
+from django.shortcuts import render
+
+#No method body(s) and only render() example provided for simplicity
+#Returns content type text/plain, with default HTTP 200
+return render(request,'stores/menu.csv', values_for_template, 
+content_type='text/plain')
+
+#Returns HTTP 404, wtih default text/html
+#NOTE: Django has a built-in shortcut & template 404 response, described in the 
+next section
+return render(request,'custom/notfound.html',status=404)
+
+#Returns HTTP 500, wtih default text/html
+#NOTE: Django has a built-in shortcut & template 500 response, described in the 
+next section
+return render(request,'custom/internalerror.html',status=500)
+
+#Returns content type application/json, with default HTTP 200
+#NOTE: Django has a built-in shortcut JSON response, described in the next 
+section
+return render(request,'stores/menu.json', values_for_template, 
+content_type='application/json')
+
+# Django shortcut exceptions to trigger HTTP statuses
+HTTP status code             Python code sample
+404 (Not Found)              from django.http import Http404   raise Http404
+500 (Internal Server Error)  raise Exception
+400 (Bad Request)            from django.core.exceptions import 
+SuspiciousOperation   raise SuspiciousOperation
+403 (Forbidden)              from django.core.exceptions import PermissionDenied
+      raise PermissionDenied
+
+301 (Permanent Redirect)     from django.http import 
+HttpResponsePermanentRedirect    return HttpResponsePermanentRedirect(“/”)
+302 (Redirect)               from django.http import HttpResponseRedirect       
+      return HttpResponseRedirect(“/”)
+
+304 (NOT MODIFIED)           from django.http import HttpResponseNotModified    
+      return HttpResponseNotModified()
+400 (BAD REQUEST)            from django.http import HttpResponseBadRequest     
+      return HttpResponseBadRequest(“<h4>The request doesn’t look right</h4>”)
+404 (NOT FOUND)              from django.http import HttpResponseNotFound       
+      return HttpResponseNotFound(“<h4>Ups, we can’t find that page</h4>”)
+403 (FORBIDDEN)              from django.http import HttpResponseForbidden      
+      return HttpResponseForbidden(“Can’t look at anything 
+here”,content_type=“text/plain”)
+405 (METHOD NOT ALLOWED)     from django.http import HttpResponseNotAllowed     
+      return HttpResponseNotAllowed(“<h4>Method not allowed</h4>”)
+410 (GONE)                   from django.http import HttpResponseGone           
+      return HttpResponseGone(“No longer here”,content_type=“text/plain”)
+500 (INTERNAL SERVER ERROR)  from django.http import HttpResponseServerError    
+      return HttpResponseServerError(“<h4>Ups, that’s a mistake on our part, 
+sorry!</h4>”)
+
+Inline response that serializes data to JSON (Defaults to HTTP 200 and content 
+type application/json)  
+              from django.http import JsonResponse  
+              data_dict = {’name’:’Downtown’,’address’:’Main#385’,’city’:’San 
+Diego’,’state’:’CA’}  
+              return JsonResponse(data_dict)
+              
+Inline response that stream data (Defaults to HTTP 200 and streaming content, 
+which is an iterator of strings)
+                from django.http import StreamingHttpResponse
+                return StreamingHttpResponse(large_data_structure)
+
+Inline response that stream binary files (Defaults to HTTP 200 and streaming 
+content)
+                from django.http import FileResponse
+                return FileResponse(open(’Report.pdf’,’rb’))
+
+Inline response with any HTTP status code (Defaults to HTTP 200)
+                from django.http import HttpResponse
+                return HttpResponse(“<h4>Django inline response</h4>”)
+                
+# HttpResponse with template and custom CSV file download
+            from django.http import HttpResponse
+            from django.utils import timezone
+            from django.template import loader, Context
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; 
+filename=Users_%s.csv' % str(timezone.now().
+            today())
+            t = loader.get_template('dashboard/users_csvexport.html')
+            c = Context({'users': sorted_users,})
+            response.write(t.render(c))
+            return response
+
+# Override built-in Django HTTP Status view methods in urls.py
+#Overrides the default 400 handler django.views.defaults.bad_request
+handler400 = 'coffeehouse.utils.views.bad_request'
+
+#Overrides the default 403 handler django.views.defaults.permission_denied
+handler403 = 'coffeehouse.utils.views.permission_denied'
+
+#Overrides the default 404 handler django.views.defaults.page_not_found
+handler404 = 'coffeehouse.utils.views.page_not_found'
+
+#Overrides the default 500 handler django.views.defaults.server_error
+handler500 = 'coffeehouse.utils.views.server_error'
+
+urlpatterns = [....
+]
+
+# Custom views to override built-in Django HTTP view methods
+from django.shortcuts import render
+def page_not_found(request):
+values_for_template = {}
+return render(request,'404.html',values_for_template,status=404)
+
+def server_error(request):
+values_for_template = {}
+return render(request,'500.html',values_for_template,status=500)
+
+def bad_request(request):
+values_for_template = {}
+return render(request,'400.html',values_for_template,status=400)
+
+def permission_denied(request):
+values_for_template = {}
+return render(request,'403.html',values_for_template,status=403)
+
+#  View Method Middleware
 
 

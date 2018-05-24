@@ -27,9 +27,11 @@ from django.views.generic import TemplateView
 urlpatterns = [
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', admin.site.urls),
-    url(r'^$', TemplateView.as_view(template_name='homepage.html')),
+    url(r'^$', TemplateView.as_view(template_name='homepage.html'), name="homepage"),
     # url(r'^about/', about_views.contact),
-    url(r'^about/', include('apps.about.urls')),
+    url(r'^about/', include('apps.about.urls'), name="about"),
+    # url(r'^about/',include('coffeehouse.about.urls',namespace="about")),
+    # url(r'^stores/',include('coffeehouse.stores.urls',namespace="stores")),
 ]
 
 # admin/vagrant1 for django admin backend
