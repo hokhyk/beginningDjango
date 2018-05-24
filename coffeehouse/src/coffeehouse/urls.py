@@ -20,9 +20,9 @@ from django.views.generic import TemplateView
 
 
 # from coffeehouse.src.coffeehouse.apps.about import views as about_views
-# import sys
-# sys.path.append("..")
-# from coffeehouse.apps.about import views as about_views
+import sys
+sys.path.append("..")
+from apps.about import views as about_views
 
 urlpatterns = [
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

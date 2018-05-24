@@ -633,5 +633,120 @@ values_for_template = {}
 return render(request,'403.html',values_for_template,status=403)
 
 #  View Method Middleware
+Other Django middleware classes and functionality
+Django middleware class structure
+class CoffeehouseMiddleware(object):
+def __init__(self, get_response):
+self.get_response = get_response
+# One-time configuration and initialization on start-up
+def __call__(self, request):
+# Logic executed on a request before the view (and other middleware) is called.
+# get_response call triggers next phase
+response = self.get_response(request)
+# Logic executed on response after the view is called.
+# Return response to finish middleware sequence
+return response
+def process_view(self, request, view_func, view_args, view_kwargs):
+# Logic executed before a call to view
+# Gives access to the view itself & arguments
+def process_exception(self,request, exception):
+# Logic executed if an exception/error occurs in the view
+def process_template_response(self,request, response):
+# Logic executed after the view is called,
+# ONLY IF view response is TemplateResponse, see listing 2-22
+
+# Techniques to add Django flash messages
+from django.contrib import messages
+# Generic add_message method
+messages.add_message(request, messages.DEBUG, 'The following SQL statements were executed:
+%s' % sqlqueries) # Debug messages ignored by default
+messages.add_message(request, messages.INFO, 'All items on this page have free shipping.')
+messages.add_message(request, messages.SUCCESS, 'Email sent successfully.')
+messages.add_message(request, messages.WARNING, 'You will need to change your password in
+one week.')
+messages.add_message(request, messages.ERROR, 'We could not process your request at this
+time.')
+
+# Shortcut level methods
+messages.debug(request, 'The following SQL statements were executed: %s' % sqlqueries) #
+Debug messages ignored by default
+messages.info(request, 'All items on this page have free shipping.')
+messages.success(request, 'Email sent successfully.')
+messages.warning(request, 'You will need to change your password in one week.')
+messages.error(request, 'We could not process your request at this time.')
+
+# Set default Django message level globally in settings.py
+
+#Reduce threshold to DEBUG level in settings.py
+from django.contrib.messages import constants as message_constants
+MESSAGE_LEVEL = message_constants.DEBUG
+
+#Increase threshold to WARNING level in setting.py
+from django.contrib.messages import constants as message_constants
+MESSAGE_LEVEL = message_constants.WARNING
+
+# Set default Django message level on a per request basis
+
+#Reduce threshold to DEBUG level per request
+from django.contrib import messages
+messages.set_level(request, messages.DEBUG)
+
+#Increase threshold to WARNING level per request
+from django.contrib import messages
+messages.set_level(request, messages.WARNING)
+
+# Use of the fail_silently=True attribute to ignore errors in case Django messages framework not installed
+from django.contrib import messages
+#Generic add_message method, with fail_silently=True
+messages.add_message(request, messages.INFO, 'All items on this page have free shipping.',fail_silently=True)
+
+#Shortcut level method, with fail_silently=True
+messages.info(request, 'All items on this page have free shipping.',fail_silently=True)
+
+When you add a Django flash message with one of the techniques described in the previous section,Django creates an instance of the storage.base.Message class.
+# Boilerplate code to use in Django template to display Django flash messages
+{% if messages %}
+<ul class="messages">
+{% for msg in messages %}
+<li>
+<div class="alert alert-{{msg.level_tag}}" role="alert">
+{{msg.message}}
+</div>
+</li>
+{% endfor %}
+</ul>
+{% endif %}
+
+# Use of get_messages() method to access Django flash messages
+from django.contrib import messages
+the_req_messages = messages.get_messages(request)
+for msg in the_req_messages:
+do_something_with_the_flash_message(msg)
+
+# Built-In Class-Based Views
+Cdjango.views.generic.View              Parent class of all class-based views, providing core functionality.
+django.views.generic.TemplateView       Allows a url to return the contents of a template, without the need of a view.
+django.views.generic.RedirectView       Allows a url to perform a redirect, without the need of a view.
 
 
+# Class-based view inherited from TemplateView with url definition
+#views.py
+from django.views.generic import TemplateView
+class AboutIndex(TemplateView):
+      template_name = 'index.html
+
+      def get_context_data(self, **kwargs):
+      #**kwargs contains keyword context initialization values (if any)
+      #Call base implementation to get a context
+      context = super(AboutIndex, self).get_context_data(**kwargs)
+      #Add context data to pass to template
+      context['aboutdata'] = 'Custom data'
+      return context
+
+#urls.py
+from coffeehouse.about.views import AboutIndex
+urlpatterns = [
+   url(r'^about/index/',AboutIndex.as_view(),{'onsale':True}),
+]
+
+all class-based views use the as_view() method to integrate into url definitions.

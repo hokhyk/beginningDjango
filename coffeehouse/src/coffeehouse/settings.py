@@ -16,13 +16,17 @@ import os
 # BASE_DIR = '/django/projects/coffeehouse'  PROJECT_DIR='/django/projects/coffeehouse/src'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
-TEMPLATE_DIR = os.path.abspath(__file__)
+TEMPLATE_DIR = (os.path.join(PROJECT_DIR, 'templates'),)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '=f2dw)crjsi13kt3whc2+=8%dd&hx_xd&9x90=o6t39^nav=l&'
+
+# Reduce threshold to DEBUG level in settings.py
+from django.contrib.messages import constants as message_constants
+MESSAGE_LEVEL = message_constants.DEBUG
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -58,7 +62,7 @@ ROOT_URLCONF = 'coffeehouse.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['%s%s' % (PROJECT_DIR, '\/coffeehouse\/templates'), ],
+        'DIRS': ['%s' % TEMPLATE_DIR, ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
