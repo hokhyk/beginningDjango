@@ -65,12 +65,31 @@ TEMPLATES = [
         'DIRS': ['%s' % TEMPLATE_DIR, ],
         'APP_DIRS': True,
         'OPTIONS': {
+            'debug': False,
+            # 'autoescape': False,
+            # “”“You can either use the {% autoescape off %} tag  {% autoescape on %}
+            #  to disable auto-escaping on a section of a Django template
+            # or the safe filter to disable auto-escaping on a single Django template variable.”“”
+
+            # 'string_if_invalid': "**** WARNING INVALID VARIABLE %s ****",
+            # 'string_if_invalid': InvalidTemplateVariable("%s"),
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            # 'builtins': [
+            #     'coffeehouse.builtins',
+            #     'thirdpartyapp.customtags.really_useful_tags_and_filters',
+            # ],
+            # 'libraries': {
+            #    'coffeehouse_tags': 'coffeehouse.tags_filters.common',  # {% load coffeehouse_tags %}
+            # },
+            #'loaders': [
+                 # 'django.template.loaders.filesystem.Loader',
+            #      'django.template.loaders.app_directories.Loader',
+            #  ],
         },
     },
 ]
@@ -152,3 +171,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+ INTERNAL_IPS = ['127.0.0.1', ]

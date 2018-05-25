@@ -750,3 +750,153 @@ urlpatterns = [
 ]
 
 all class-based views use the as_view() method to integrate into url definitions.
+
+Characters Django auto-escapes by default
+Original character Escaped to
+<             &lt;
+>             &gt;
+'             (single quote) &#39;
+"             (double quote) &quot;
+&             &amp;
+
+# Option with builtins to gain automatic access to tags/filters on all templates
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+TEMPLATES = [
+{
+'BACKEND': 'django.template.backends.django.DjangoTemplates',
+'DIRS': ['%s/templates/' % (PROJECT_DIR),'%s/dev_templates/' % (PROJECT_DIR),],
+'APP_DIRS': True,
+'OPTIONS': {
+'context_processors': [
+'django.template.context_processors.debug',
+'django.template.context_processors.request',
+'django.contrib.auth.context_processors.auth',
+'django.contrib.messages.context_processors.messages',
+],
+'builtins': [
+'coffeehouse.builtins',
+'thirdpartyapp.customtags.really_useful_tags_and_filters',
+],
+},
+},
+]
+
+# Option with libraries to register tags/filters with alternative label/name and under any project directory
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+TEMPLATES = [
+{
+'BACKEND': 'django.template.backends.django.DjangoTemplates',
+'DIRS': ['%s/templates/' % (PROJECT_DIR),'%s/dev_templates/' % (PROJECT_DIR),],
+'APP_DIRS': True,
+'OPTIONS': {
+'context_processors': [
+'django.template.context_processors.debug',
+'django.template.context_processors.request',
+'django.contrib.auth.context_processors.auth',
+'django.contrib.messages.context_processors.messages',
+],
+'libraries': {
+'coffeehouse_tags': 'coffeehouse.tags_filters.common',
+},
+},
+},
+]
+
+# template lodaders
+A template loader is a Python class that implements the actual logic required to search and load templates. 
+
+Template loader class                               Description
+django.template.loaders.filesystem.Loader            Searches and loads templates in directories declared in the DIRS variable. Enabled by default when DIRS is not empty.
+django.template.loaders.app_directories.Loader       Searches and loads templates from subdirectories named templates in all apps declared in INSTALLED_APPS. Enabled by default when APP_DIRS is True.
+django.template.loaders.cached.Loader                Searches for templates from an in-memory cache, after loading templates from a file-system or app directory loader.
+django.template.loaders.locmem.Loader                Searches for templates from an in-memory cache, after loading templates from a Python dictionary.
+
+# reusable templates
+ {% block <name>%}{% endblock <name> %} 
+ 
+#Django template with {% extends %} and {% block %} tag
+{% extends "../base.html" %}
+{% block title %}Coffeehouse home page{% endblock title %}
+
+# Django templates use of {{block.super}} with three reusable templates
+#base.html template
+<p>{% block breadcrumb %}Home{% endblock breadcrumb %}</p>
+
+#index.html template
+{% extends "base.html" %}
+{% block breadcrumb %}Main{% endblock breadcrumb %}
+
+#detail.html template
+{% extends "index.html" %}
+{% block breadcrumb %} {{block.super}} : Detail {% endblock breadcrumb %}
+
+{% include %} tag expects a template argument – similar to the {% extend %} tag
+The {% include %} tag also supports the ability to pass multiple variables using the with notation (e.g., {% include "footer.html" with year="2013" copyright="Creative Commons" %}).
+
+If template B uses the {% include "footer.html" with year="2013" only %} statement, the footer.html template only gets access to the year variable, irrespective of the variables available in template B. 
+
+# Django request context processor
+(django.template.context_processors.request)
+The Django request context processor exposes variables related to a request (i.e., HTTP request). This
+context processor makes data available through a massive dictionary named request, which includes some
+of the following key-values:
+•	 request.GET.- Contains a request's HTTP GET parameters.
+•	 request.POST.- Contains a request's HTTP POST parameters.
+•	 request.COOKIES.- Contains a request's HTTP COOKIES.
+•	 request.CONTENT_TYPE.- Contains a request's HTTP Content-type header.
+•	 request.META.- Contains a request's HTTP META data.
+•	 request.REMOTE_ADDR.- Contains a request's HTTP remote address.
+# Django auth context processor
+(django.contrib.auth.context_processors.auth)
+The Django auth context processor exposes variables related to authentication logic. This context processor
+makes the following variables accessible in Django templates:
+•	 user.- Contains user data (e.g., id, name, email, anonymous user).
+•	 perms.- Contains user app permissions (e.g., True, False or explicit app permissions
+a user has access to in a django.contrib.auth.context_processors.PermWrapper
+object).
+
+# Django messages context processor
+(django.contrib.messages.context_processors.messages)
+The Django messages context processor exposes variables related to the Django messages framework,
+introduced in Chapter 2. Messages are added in Django view methods to the message framework, which
+are then exposed in Django templates. This context processor makes the following variables accessible in
+Django templates:
+•	 messages.- Contains the messages added through the Django messages framework
+in Django view methods.
+•	 DEFAULT_MESSAGE_LEVELS.- Contains a mapping of the message level names to their
+numeric value (e.g., {'DEBUG': 10, 'INFO': 20, 'WARNING': 30, 'SUCCESS':
+25, 'ERROR': 40}).
+
+# Other Built-In Django Context Processors: i18n, media, static, tz, and CSRF context Processors
+## Django static context processor (django.template.context_processors.static)
+The Django static context processor exposes a variable related to static resources. This context processor
+makes the following variable accessible in Django templates:
+•	 STATIC_URL.- Contains the static url, based on the STATIC_URL variable in the
+settings.py file.
+# Even though the static context processor is accessible (i.e., it's not deprecated) its functionality is outdated and should be avoided. You should use the staticfiles app instead. more details are provided in Chapter 5 in the section on  setting up static web page resources (Images, Css, javascript).
+
+# Custom Context Processors
+Custom Django context processors allow you to set up data for access on all Django templates.
+
+def onsale(request):
+#Create fixed data structures to pass to template
+#data could equally come from database queries
+#web services or social APIs
+   sale_items = {'Monday':'Mocha 2x1','Tuesday':'Latte 2x1'}
+   return {'SALE_ITEMS': sale_items}
+
+The custom context processor method can be placed inside any project file or directory. 
+'OPTIONS': {
+    'context_processors': [
+    'coffeehouse.stores.processors.onsale',
+    'django.template.context_processors.debug',
+    'django.template.context_processors.request',
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
+    ],
+}
+
+
+
