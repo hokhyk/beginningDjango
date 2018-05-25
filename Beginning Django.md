@@ -898,5 +898,61 @@ The custom context processor method can be placed inside any project file or dir
     ],
 }
 
+# Built-In Django Filters
+Dates, Strings, Lists, Numbers, Dictionaries, Spacing and special characters,Development, and Testing and Urls.
+{{variable|urlizetrunc:20}}
 
+# build-in Django Tags
+Dates, forms, comparison operations, loops, Python and filter operations, spacing and special characters, template structures, development and testing, and urls
+{% now "Y" as current_year %} 
+The {% csrf_token %} tag 
+{% if %} with {% elif %} {% else %}
+
+#Firstof example
+{% firstof var1 var2 var3 %}
+
+#Equivalent of firstof example
+{% if var1 %}
+{{var1|safe}}
+{% elif var2 %}
+{{var2|safe}}
+{% elif var3 %}
+{{var3|safe}}
+{% endif %}
+
+{% filter %}.- The {% filter %} tag is used to apply Django filters to template sections. If you declare {% filter lower %} the lower filter is applied to all variables between this tag and the {% endfilter %} tag - note the filter lower 
+converts all content to lowercase.
+
+{% with %}.- The {% with %} tag lets you define variables in the context of Djangotemplates. 
+ {% with drinkwithtax=drink.cost*1.07 drinkpromo=drink.cost*0.85 %} 
+ {% endwith %} 
+
+ In Django templates is to embed the code inside a custom Django tag or filter.
+ 
+ {% load %}.- The {% load %} tag is used to load custom Django tags and filters. 
+
+ {% url %}.- The {% url %} tag is used to build urls from predefined values in a project's urls.py file. The {% url %} tag is useful because it avoids the need to hard-code urls on templates, instead it inserts urls based on names. The {%url %} tag accepts a url name as its first argument and url parameters as subsequent arguments.
+ 
+ If a url points to /drinks/index/ and is named drinks_main, you can use the {% url %} to reference this url (e.g., <a href="{% url drinks_main %}"> Go to drinks home page </a>);
+ 
+# Custom Filters
+from django import template
+register = template.Library()
+
+@register.filter()
+def boldcoffee(value):
+    '''Returns input wrapped in HTML tags'''
+    return '<b>%s</b>' % value
+
+@register.filter()
+    def coffee(value,arg="muted"):
+    '''Returns input wrapped in HTML tags with a CSS class'''
+    '''Defaults to CSS class 'muted' from Bootstrap'''
+    return '<span class="%s">%s</span>' % (arg,value)
+
+# Installation and Access of custom filters and tags
+Django custom filters can be stored in one of two locations:
+•	 Inside apps .- Stored in .py files located inside Django apps in a folder called templatetags.
+
+•	 Any project location.- Stored in .py files on any folder in a Django project, configured through the libraries field in OPTIONS of the TEMPLATES variable in settings.py.
 
