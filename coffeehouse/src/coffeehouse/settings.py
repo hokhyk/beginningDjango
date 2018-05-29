@@ -10,13 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
-import os
+import os,sys
+import jinja2
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 # BASE_DIR = '/django/projects/coffeehouse'  PROJECT_DIR='/django/projects/coffeehouse/src'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_DIR = (os.path.join(PROJECT_DIR, 'templates'),)
+APPS_DIR = sys.path.insert(0,os.path.join(PROJECT_DIR,'apps'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -60,6 +62,15 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'coffeehouse.urls'
 
 TEMPLATES = [
+    {
+        'BACKEND':'django.template.backends.jinja2.Jinja2',
+        'DIRS': ['%s/jinjatemplates/'% PROJECT_DIR,],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'autoescape': False,
+            'undefined': jinja2.StrictUndefined
+        }
+    },
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': ['%s' % TEMPLATE_DIR, ],

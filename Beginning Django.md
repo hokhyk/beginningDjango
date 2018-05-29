@@ -57,9 +57,7 @@ $ rm -rf ~/.pyenv/versions/2.7.9env/
 pip install /home/Downloads/django/
       
 ## start  a Django Project  (django-admin, django-admin.py)
-To start a Django project you must use the django-admin executable or 
-django-admin.py script that
- comes with Django. 
+To start a Django project you must use the django-admin executable or django-admin.py script that comes with Django. 
 ### django-admin startproject coffeehouse
 Django project structure
 +<BASE_DIR_project_name>
@@ -191,21 +189,15 @@ MariaDB [mysql]> exit;
 #systemctl start mysql
 
 ### 创建mysql数据库
-
-　　1、 CREATE DATABASE 数据库名;  CREATE DATABASE `test2` DEFAULT CHARACTER SET utf8 
-COLLATE utf8_general_ci; utf8_general_cs, utf8_bin区分大小写
-
-　　2、 GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON 数据库名.* TO 
-数据库名@localhost IDENTIFIED BY '密码';
-
+　　1、 CREATE DATABASE 数据库名;  CREATE DATABASE `test2` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci; utf8_general_cs, utf8_bin区分大小写
+　　2、 GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON 数据库名.* TO 数据库名@localhost IDENTIFIED BY '密码';
 　　3、 SET PASSWORD FOR '数据库名'@'localhost' = OLD_PASSWORD('密码');
+   如果要让mysql能够远程访问，则將localhost改为%即可。 或者： mysql>use mysql;    mysql>update user set host = '%' where user = 'root';     mysql>select host, user from user;
 
+   
 CREATE USER 'djangouser'@'localhost' IDENTIFIED BY 'djangouser';
-GRANT ALL PRIVILEGES ON *.* TO 'djangouser'@'localhost' IDENTIFIED BY 
-'djangouser' REQUIRE NONE WITH GRANT OPTION MAX_QUERIES_PER_HOUR 0 
-MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
-CREATE DATABASE IF NOT EXISTS `coffeehouse` DEFAULT CHARACTER SET utf8 COLLATE 
-utf8_bin;
+GRANT ALL PRIVILEGES ON *.* TO 'djangouser'@'localhost' IDENTIFIED BY 'djangouser' REQUIRE NONE WITH GRANT OPTION MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
+CREATE DATABASE IF NOT EXISTS `coffeehouse` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 GRANT ALL PRIVILEGES ON `coffeehouse`.* TO 'coffeehouse'@'localhost';
 　　
 　　依次执行3个命令完成数据库创建。注意：中文 “密码”和“数据库”是户自己需要设置的。
@@ -277,6 +269,8 @@ GRANT ALL PRIVILEGES ON `coffeehouse`.* TO 'coffeehouse'@'localhost';
 　　
 ### Test Django Database Connection and Build Django Base Tables
 1. [user@coffeehouse ~]$ python manage.py migrate
+
+# django-admin startapp my-app 创建一个app
 
 ## set up content: understand urls, templates and Apps
 Content in Django projects works with three major building blocks: urls, 
