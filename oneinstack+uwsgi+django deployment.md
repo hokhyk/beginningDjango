@@ -132,3 +132,33 @@ systemctl enable demo
 启动：uwsgi --ini your_path/demo.ini
 停止：uwsgi --stop your_path/uwsgi.pid
 重启：uwsgi --reload your_path/uwsgi.pid
+
+
+[uwsgi]
+#uid = www
+uid = hok
+#gid = www
+socket = /data/uwsgi-script/uwsgi.sock  
+#chmod-socket = 660             
+#chown-socket = www:www   
+    
+#socket = 127.0.0.1:8000
+static-map=/static=/data/wwwroot/gky.cdtfhr.com/ServicePlatform/static/ 
+chdir = /data/wwwroot/gky.cdtfhr.com/ServicePlatform/
+module = ServicePlatform.wsgi:application         
+home = /data/py36      
+py-autoreload = 1
+pidfile = /data/uwsgi-script/ServicePlatform/uwsgi.pid    
+daemonize = /data/uwsgi-script/ServicePlatform/uwsgi.log     
+master = true                                       
+processes = 2        
+#threads = 2
+workers = 2
+vacuum = true         
+max-requests = 2000
+
+source /data/py36/bin/activate
+uwsgi --ini /usr/local/uwsgi/sites/serviceplatform.ini
+
+
+
