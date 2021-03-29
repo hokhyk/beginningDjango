@@ -29,7 +29,7 @@ numpy==1.14.0
 olefile==0.44
 Pillow==4.3.0
 protobuf==3.5.1
-Pygments==2.2.0
+Pygments==2.7.4
 pymongo==2.9
 PyMySQL==0.7.11
 pyodbc==4.0.23
