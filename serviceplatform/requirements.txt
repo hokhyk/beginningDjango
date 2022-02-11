@@ -28,7 +28,7 @@ netaddr==0.7.18
 numpy==1.14.0
 olefile==0.44
 Pillow==4.3.0
-protobuf==3.5.1
+protobuf==3.15.0
 Pygments==2.2.0
 pymongo==2.9
 PyMySQL==0.7.11
